@@ -44,7 +44,7 @@ export default function News(props) {
     // this.setState({ loading: true });
     let data = await fetch(url);
     let parsed_data = await data.json();
-    // console.log(parsed_data);
+    console.log(parsed_data);
     setArticles(articles.concat(parsed_data.articles));
     setTotalResults(parsed_data.totalResults);
     setLoading(false);
