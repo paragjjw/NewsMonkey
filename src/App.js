@@ -28,7 +28,7 @@ export default function App() {
                 key="1"
                 pageSize={5}
                 country="in"
-                category="general"
+                category="news"
               />
             }
           ></Route>
@@ -41,7 +41,7 @@ export default function App() {
                 key="2"
                 pageSize={5}
                 country="in"
-                category="general"
+                category="news"
               />
             }
           ></Route>
@@ -70,7 +70,7 @@ export default function App() {
             }
           ></Route>
           <Route
-            path="/health"
+            path="/finance"
             element={
               <News
                 setProgress={setProgress}
@@ -78,12 +78,12 @@ export default function App() {
                 key="5"
                 pageSize={5}
                 country="in"
-                category="health"
+                category="finance"
               />
             }
           ></Route>
           <Route
-            path="/science"
+            path="/politics"
             element={
               <News
                 setProgress={setProgress}
@@ -91,7 +91,7 @@ export default function App() {
                 key="6"
                 pageSize={5}
                 country="in"
-                category="science"
+                category="politics"
               />
             }
           ></Route>
@@ -104,7 +104,7 @@ export default function App() {
                 key="7"
                 pageSize={5}
                 country="in"
-                category="sports"
+                category="sport"
               />
             }
           ></Route>
@@ -117,7 +117,20 @@ export default function App() {
                 key="8"
                 pageSize={5}
                 country="in"
-                category="technology"
+                category="tech"
+              />
+            }
+          ></Route>
+          <Route
+            path="/world"
+            element={
+              <News
+                setProgress={setProgress}
+                apiKey={apiKey}
+                key="9"
+                pageSize={5}
+                country="in"
+                category="world"
               />
             }
           ></Route>

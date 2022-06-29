@@ -8,19 +8,26 @@ export default function News(props) {
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [totalResults, setTotalResults] = useState(0);
+  const options = {
+    method: "GET",
+    headers: {
+      "X-RapidAPI-Key": `${props.apiKey}`,
+      "X-RapidAPI-Host": "newscatcher.p.rapidapi.com",
+    },
+  };
   // document.title = `${
   //   props.category[0].toUpperCase() + props.category.slice(1)
   // } - NewMonkey`;
   const updateNews = async (pageNo) => {
     props.setProgress(10);
-    let url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${pageNo}&pageSize=${props.pageSize}`;
+    let url = `https://newscatcher.p.rapidapi.com/v1/search?q=*&lang=en&country=${props.country}&topic=${props.category}&page=${pageNo}&page_size=${props.pageSize}&media=True`;
     setLoading(true);
-    let data = await fetch(url);
+    let data = await fetch(url, options);
     props.setProgress(50);
     let parsed_data = await data.json();
     // console.log(parsed_data);
     setArticles(parsed_data.articles);
-    setTotalResults(parsed_data.totalResults);
+    setTotalResults(parsed_data.total_pages);
     setLoading(false);
     setPage(pageNo);
     props.setProgress(100);
@@ -36,17 +43,17 @@ export default function News(props) {
   //     updateNews(page + 1);
   // };
   const fetchMoreData = async () => {
-    let url = `https://newsapi.org/v2/top-headlines?country=${
+    let url = `https://newscatcher.p.rapidapi.com/v1/search?q=*&lang=en&country=${
       props.country
-    }&category=${props.category}&apiKey=${props.apiKey}&page=${
-      page + 1
-    }&pageSize=${props.pageSize}`;
+    }&topic=${props.category}&page=${page + 1}&page_size=${
+      props.pageSize
+    }&media=True`;
     // this.setState({ loading: true });
-    let data = await fetch(url);
+    let data = await fetch(url, options);
     let parsed_data = await data.json();
     console.log(parsed_data);
     setArticles(articles.concat(parsed_data.articles));
-    setTotalResults(parsed_data.totalResults);
+    setTotalResults(parsed_data.total_pages);
     setLoading(false);
     setPage(page + 1);
   };
@@ -60,26 +67,24 @@ export default function News(props) {
       <InfiniteScroll
         dataLength={articles.length}
         next={fetchMoreData}
-        hasMore={articles.length !== totalResults}
+        hasMore={page !== totalResults}
         loader={<Spinner />}
       >
         <div className="container">
           <div className="row">
             {articles.map((element) => {
               return (
-                <div className="col-md-4" key={element.url}>
+                <div className="col-md-4" key={element.link}>
                   <Newsitem
                     title={element.title ? element.title.slice(0, 45) : ""}
                     description={
-                      element.description
-                        ? element.description.slice(0, 88)
-                        : ""
+                      element.summary ? element.summary.slice(0, 88) : ""
                     }
-                    imageUrl={element.urlToImage}
-                    newsUrl={element.url}
+                    imageUrl={element.media}
+                    newsUrl={element.link}
                     author={element.author}
-                    date={element.publishedAt}
-                    source={element.source.name}
+                    date={element.published_date}
+                    source={element.rights.slice(0, -4)}
                   />
                 </div>
               );

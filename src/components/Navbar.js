@@ -48,13 +48,13 @@ export default function Navbar() {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/health">
-                  Health
+                <Link className="nav-link" to="/finance">
+                  Finance
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/science">
-                  Science
+                <Link className="nav-link" to="/politics">
+                  Politics
                 </Link>
               </li>
               <li className="nav-item">
@@ -67,7 +67,11 @@ export default function Navbar() {
                   Technology
                 </Link>
               </li>
-
+              <li className="nav-item">
+                <Link className="nav-link" to="/world">
+                  World
+                </Link>
+              </li>
               {/* <li className="nav-item dropdown">
                   <a
                     className="nav-link dropdown-toggle"
